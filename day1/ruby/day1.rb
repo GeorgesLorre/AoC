@@ -1,20 +1,22 @@
-#ls = File.read("input/inputday1.txt").split('/n').to_s
-ls = "122456"
+ls = File.read("input/inputday1.txt").delete("\n").split('').to_a
+#ls = "122456".chars.to_a
 
 
 def part1(input)
-  marr = input.split('') #convert string input to array
-  marr2 = marr.each_cons(2).to_a
-  return marr2
-
+  input << input.first
+  return input.each_cons(2).to_a
+              .select{|a,b| a==b}
+              .map{|a,b| a.to_i}
+              .reduce(:+)
 end
 
-# def part1(input)
-#   return input.each_cons(2)
-#             .to_a
-#             .select{|a,b| a==b}
-#             .map(&:first)
-#             .inject(:+)
-# end
+def part2(input)
+  size = input.size
+  return input.select
+              .each_with_index { |a, i| input[(i + size / 2) % size] == a }
+              .map(&:to_i)
+              .inject(:+)
+end
 
-puts part1(ls)
+
+p part1(ls)
